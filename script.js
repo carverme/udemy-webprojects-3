@@ -13,6 +13,8 @@ function toggleVideoStatus() {
         video.pause();
     }
 }
+//Notes
+//HTML "video" API built-in to have the play pause methods.
 
 //update play/pause icon
 function updatePlayIcon() {
@@ -25,19 +27,43 @@ function updatePlayIcon() {
 
 //update progress & timestamp
 function updateProgress() {
-    return true;
+    progress.value = (video.currentTime / video.duration) * 100;
+   
+    //Get minutes
+    let mins = Math.floor(video.currentTime / 60);
+    if (mins < 10) {
+        mins = '0' + String(mins);
+    }
+
+    //Get seconds
+    let secs = Math.floor(video.currentTime % 60);
+    if (secs < 10) {
+        secs = '0' + String(secs);
+    }
+
+    timestamp.innerHTML = `${mins}:${secs}`;
+   
+    // console.log(video.duration);
+    // console.log(currentTime);
 }
+//Notes
+//This updates the progress bar moving.
 
 //Set video time to progress
 function setVideoProgress() {
-    return true;
+    video.currentTime = (+progress.value * video.duration) / 100;
 }
+//Notes
+//This adjusts the video to the progress bar when moved.
 
 //Stop video
 function stopVideo() {
     video.currentTime = 0;
     video.pause();
 }
+//Notes
+//No "stop" in HTML video api, so... onclick for stop, set video time to 0, and then pause.
+
 
 //Event Listeners
 video.addEventListener('click', toggleVideoStatus);
